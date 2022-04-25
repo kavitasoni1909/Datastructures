@@ -1,0 +1,38 @@
+Case 1: Given start and finish point, find number of unique paths. Assume no obstacles are present.
+Case 2: Given start, one point to include in paths, finish point.
+Case 3: Given start, list of points to include in paths, finish point. Assume list of points is not ordered in which the points should be traversed.
+
+Soltn for case 1: 
+  https://leetcode.com/problems/unique-paths/
+  1. Do a DFS using a recursive function from start to finish point.From each point we can move right or down. 
+  2. Include only valid points. Use a cache for better time complexity
+  start = (0,0) , end = (m,m)
+  call fnctn_recurse(0, 0, new int[m][m])
+  
+  int fnctn_recurse(int x, int y, int[][] cache):
+    check if (x,y) is valid point and not out of bound, else return 0
+    
+    //reached finish point
+    if x==m and y==m return 1;
+    
+    if cache[x][y] != -1 return cache[x][y];
+    
+    int paths1 = fnctn_recurse(x, y+1, cache);
+    int paths2 = fnctn_recurse(x+1, y, cache);
+    
+    cache[x][y] = paths1 + paths2;
+    return cache[x][y];
+  
+  Soltn for case 2:
+    1. Find Unique Paths from start to point to include. (0,0) to (x,y). Lets say unique paths are 'm'
+    2. Find Unique Paths from (x,y) to finish. Lets say unique paths are 'n'
+    3. So total unique paths from start via point to finish are m*n
+    
+   Soltn for case 3:
+    1. Sort points using Manhattan Distance from (0,0)/ start using Maths.abs(x1-x2) + Math.abs(y1-y2)
+    2. Check if its really possible to include all points, since we move only right or left/ whatever qstn mentions.
+       Or ask interviewer if I can assume its possible to include all points in path and all points are reachable when ordered.
+       a.Check all x's, if points[n][0] < points[n-1][0] INVALID return 0, since we cannot have path in that order, points unreachable
+       b.Check all y's, if points[n][1] < points[n-1][1] INVALID return 0, since we cannot have path in that order, points unreachable
+    3. Now find UPs(Unique Paths) from (0,0) to (x1,y1) * (x2,y2) to (x3,y3) * (x3,y3) to (xn,yn) * (xn,yn) to (m,m)
+  
