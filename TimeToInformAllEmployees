@@ -1,0 +1,30 @@
+Given a collection of employee objects. Each employee has who reports them directly and time it takes to propogate a message to each one of these reports. 
+CEO wants to send a message through reporting structure to all employees and wants minimum number of days required to inform all the employees
+https://leetcode.com/discuss/interview-question/2000153/Google-Phone-screen-question
+          A
+        /1 \2
+      B     C
+    /1 \2  /2 \1
+  D     E  F   G
+ /3
+H
+
+Example: Employee: {"A", reports=[{B,1}, {C,2}]}, Employee: {"B", reports=[{D,1}, {E,2}]}
+A-B-D-H : 5
+A-B-E : 3
+A-C-F : 4
+A-C-G : 3
+Minimum days required if 5 to inform all employees
+
+Thinking process:
+1. Consider the reporting structure as tree, we need to find sum of days from root to each leaf nodes, i.e CEO to each juniormost employees
+2. So we will have to compute sum of each such paths to every leaf node.
+3. We can use DFS to start from root and and reach leaf nodes.
+4. While doing DFS we can compute sum on each depth's path, when we reach a leaf node we can store the sum of days reqd to reach that leaf node.
+5. At the end we want MAX of all such paths to leaf nodes.
+6. Instead of storing all sums, we can have a MAX variable to compare final sum of each path and replace if we see a larger sum.
+
+Similar leetcode questions:
+Time Needed to Inform All Employees: https://leetcode.com/problems/time-needed-to-inform-all-employees/
+Sum Root to Leaf Numbers: https://leetcode.com/problems/sum-root-to-leaf-numbers/
+Maximum Depth of Binary Tree: https://leetcode.com/problems/maximum-depth-of-binary-tree/
