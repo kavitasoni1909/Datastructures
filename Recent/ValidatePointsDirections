@@ -1,0 +1,30 @@
+You are given various statements regarding some points and the direction between them. Check if all the statements are correct or not.
+
+For example:
+
+P1 is in North of P2
+P2 is in North of P3
+P3 is in North of P1
+
+Output: False (since P3 will be in South of P1)
+
+Directions can be N,S,W,E,NW,NE,SW, etc.
+
+APPROACH:
+
+Let B -> A, a directed edge from B to A, represent the inequality of A > B.
+Let B = A, a bi-directed edge between B and A, represent the equality of B = A.
+
+We can now model the relationship of all 8 directions N/E/S/W/NE/SE/SW/NW:
+
+For each statement, e.g. P1 is in North of P2, it means that x_p1 == x_p2 and y_p1 > y_p2,
+so we can then form the following two edges between P1 and P2:
+
+for x-plane, P2 = P2 (equality edge)
+for y-plane, P1 <- P2 (inequality edge)
+
+STEPS:
+  1. Create two graphs for x-plane and y-plane
+  2. For each statement add an edge in x-plane and y-plane. Based on the statements we would add an equality and inequality edge
+  3. Do a DFS(cycle detection) for both the graphs. 
+  4. If cycle is detected and all edges are equality edges then its valid. But if cycle is detected and path consists of any inequality edge. Its violation
